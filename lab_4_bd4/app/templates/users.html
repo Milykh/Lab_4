@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1 class="my-5">список пользователей</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Логин</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
+            <th>Дата создания</th>
+            {% if current_user.is_authenticated %}
+            <th>удаление</th>
+            <th>редактировать</th>
+
+
+            {% endif %}
+        </tr>
+
+
+    </thead>
+    <tbody>
+        {%for user in users%}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{user.login}}</td>
+                <td>{{user.last_name}}</td>
+                <td>{{user.first_name}}</td>  
+                <td>{{user.middle_name}}</td> 
+                <td>{{user.data}}</td> 
+                {% if current_user.is_authenticated %}
+                <td>                                                         
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"   >удалить</a>
+                    
+                </td>
+                <td>                                                         
+                    <a class="btn btn-primary"  href="{{url_for('crform',re=user.id)}}">редактировать</a>
+            
+                </td>
+                <td>                                                         
+                    {{user.id}}
+            
+                </td>
+
+                {% endif %}
+            </tr>
+
+        {%endfor%}
+
+    </tbody>
+
+
+
+
+</table>
+{% if current_user.is_authenticated %} 
+
+<a class="btn btn-primary" href="{{url_for('fusers')}}">Создать пользователя</a>
+
+
+{% endif %}
+
+{% endblock %}
